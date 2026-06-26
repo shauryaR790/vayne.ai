@@ -18,7 +18,6 @@ export function InvestigationCard({ finding }: { finding: Finding }) {
   return (
     <CollapsibleWorkspaceCard
       expandLabel="Expand investigation"
-      previewValue={finding.confidence}
       title={
         <>
           <h2 className="text-lg font-black uppercase tracking-wide sm:text-xl">

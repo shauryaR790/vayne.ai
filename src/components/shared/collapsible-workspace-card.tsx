@@ -12,7 +12,6 @@ export function CollapsibleWorkspaceCard({
   subtitle,
   trailing,
   expandLabel = "View details",
-  previewValue,
   children,
   className,
 }: {
@@ -20,8 +19,6 @@ export function CollapsibleWorkspaceCard({
   subtitle?: React.ReactNode;
   trailing?: React.ReactNode;
   expandLabel?: string;
-  /** 0–100 — fills the preview bar when collapsed */
-  previewValue?: number;
   children: React.ReactNode;
   className?: string;
 }) {
@@ -48,16 +45,6 @@ export function CollapsibleWorkspaceCard({
         aria-label={open ? "Collapse" : expandLabel}
         className="group/bar flex w-full flex-col border-t border-white/15"
       >
-        {previewValue !== undefined && (
-          <div className="h-1 w-full bg-white/10">
-            <motion.div
-              className="h-full bg-white"
-              initial={false}
-              animate={{ width: `${previewValue}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-          </div>
-        )}
         <div className="flex items-center gap-3 px-5 py-3">
           <div className="h-px flex-1 bg-white/15" />
           <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
