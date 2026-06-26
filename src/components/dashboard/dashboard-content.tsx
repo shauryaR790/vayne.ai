@@ -6,7 +6,6 @@ import { CalendarDays, RefreshCw } from "lucide-react";
 
 import { metrics } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { TypingAnimation } from "@/components/ui/typing-animation";
 import { MetricCard } from "./metric-card";
 import { AiSummaryCard } from "./ai-summary-card";
 import { AttackSurfaceCard } from "./attack-surface-card";
@@ -32,17 +31,9 @@ export function DashboardContent() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <TypingAnimation
-            as="h1"
-            typeSpeed={55}
-            startOnView={false}
-            showCursor
-            blinkCursor
-            cursorStyle="block"
-            className="text-brutal text-4xl font-black uppercase sm:text-5xl lg:text-6xl"
-          >
-            WELCOME BACK SHAURYA
-          </TypingAnimation>
+          <h1 className="text-brutal text-4xl font-black uppercase sm:text-5xl">
+            Report
+          </h1>
         </motion.div>
 
         <motion.div
