@@ -40,7 +40,7 @@ export function FindingCardRich({ finding }: { finding: Finding }) {
               </Badge>
             </div>
             {finding.cve && (
-              <p className="mt-3 border border-white/25 px-2 py-1 font-mono text-[11px] text-white/50">
+              <p className="mt-3 border border-black bg-white/[0.04] px-2 py-1 font-mono text-[11px] uppercase text-white/50">
                 {finding.cve}
               </p>
             )}
@@ -56,7 +56,7 @@ export function FindingCardRich({ finding }: { finding: Finding }) {
             />
             <div>
               <SectionLabel>Business Impact</SectionLabel>
-              <p className="mt-2 text-[15px] font-bold leading-snug">
+              <p className="mt-2 text-[15px] font-bold uppercase leading-snug">
                 {finding.businessImpact}
               </p>
             </div>

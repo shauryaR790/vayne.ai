@@ -123,7 +123,7 @@ export function AttackPathInvestigation({ path }: { path: AttackPath }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-px bg-white/15 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px bg-black sm:grid-cols-4">
         <MetricTile
           label="Risk Score"
           value={path.riskScore.toFixed(1)}

@@ -39,20 +39,22 @@ export function MetricTile({
   large?: boolean;
 }) {
   return (
-    <div className="border border-white/15 bg-white/[0.02] p-4">
+    <div className="border border-black bg-white/[0.04] p-4">
       <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/45">
         {label}
       </p>
       <p
         className={cn(
-          "mt-2 font-black leading-none",
+          "mt-2 font-black uppercase leading-none",
           large ? "text-4xl" : "text-2xl"
         )}
       >
-        {value}
+        {typeof value === "string" ? value.toUpperCase() : value}
       </p>
       {sub && (
-        <p className="mt-1.5 text-[12px] font-medium text-white/55">{sub}</p>
+        <p className="mt-1.5 text-[12px] font-bold uppercase text-white/55">
+          {sub}
+        </p>
       )}
     </div>
   );

@@ -20,20 +20,22 @@ export function RiskMeter({
   return (
     <div className={cn("space-y-2", className)}>
       {label && (
-        <div className="flex items-center justify-between">
-          <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
-            {label}
-          </span>
-          <span className="text-2xl font-black">{value.toFixed(1)}</span>
-        </div>
+        <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
+          {label}
+        </span>
       )}
-      <div className="h-1.5 w-full overflow-hidden bg-white/10">
-        <motion.div
-          className="h-full bg-white"
-          initial={{ width: 0 }}
-          animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
+      <div className="flex items-center gap-3">
+        <div className="h-2 min-w-0 max-w-[58%] flex-1 overflow-hidden border border-black bg-white/10">
+          <motion.div
+            className="h-full bg-white"
+            initial={{ width: 0 }}
+            animate={{ width: `${pct}%` }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          />
+        </div>
+        <span className="shrink-0 text-lg font-black leading-none">
+          {value.toFixed(1)}
+        </span>
       </div>
     </div>
   );
@@ -50,23 +52,25 @@ export function ProgressBar({
   display?: string;
   className?: string;
 }) {
+  const displayValue = (display ?? `${value}%`).toUpperCase();
+
   return (
     <div className={cn("space-y-2", className)}>
-      <div className="flex items-end justify-between gap-2">
-        <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
-          {label}
+      <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
+        {label}
+      </span>
+      <div className="flex items-center gap-3">
+        <div className="h-2 min-w-0 max-w-[58%] flex-1 overflow-hidden border border-black bg-black">
+          <motion.div
+            className="h-full bg-white"
+            initial={{ width: 0 }}
+            animate={{ width: `${value}%` }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          />
+        </div>
+        <span className="shrink-0 text-lg font-black uppercase leading-none">
+          {displayValue}
         </span>
-        <span className="text-2xl font-black leading-none">
-          {display ?? `${value}%`}
-        </span>
-      </div>
-      <div className="h-2 w-full overflow-hidden border border-white/20 bg-black">
-        <motion.div
-          className="h-full bg-white"
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-        />
       </div>
     </div>
   );

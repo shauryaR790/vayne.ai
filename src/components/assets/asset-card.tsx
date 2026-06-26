@@ -91,7 +91,7 @@ export function AssetCard({ asset }: { asset: Asset }) {
       </div>
 
       {/* BOTTOM METRICS */}
-      <div className="grid grid-cols-2 gap-px bg-white/15 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px bg-black sm:grid-cols-4">
         <MetricTile label="Findings" value={asset.findings} large />
         <MetricTile label="Critical" value={asset.critical} large />
         <MetricTile label="Attack Paths" value={asset.attackPaths} large />

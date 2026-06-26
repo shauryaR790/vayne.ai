@@ -94,7 +94,7 @@ export function InvestigationCard({ finding }: { finding: Finding }) {
         </div>
 
         {/* BOTTOM metrics */}
-        <div className="grid grid-cols-2 gap-px bg-white/15 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-px bg-black sm:grid-cols-5">
           <MetricTile label="Business Impact" value={finding.businessImpact} />
           <MetricTile label="Exploitability" value={finding.exploitability} />
           <MetricTile

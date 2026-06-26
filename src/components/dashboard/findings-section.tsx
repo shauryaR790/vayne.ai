@@ -62,7 +62,7 @@ function FindingCard({
         />
         <div>
           <SectionLabel>Business Impact</SectionLabel>
-          <p className="mt-2 text-[13px] font-medium leading-snug">
+          <p className="mt-2 text-[13px] font-medium uppercase leading-snug">
             {finding.businessImpact}
           </p>
         </div>
