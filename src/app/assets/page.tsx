@@ -23,7 +23,7 @@ export default function AssetsPage() {
           <span className="text-right">Status</span>
         </div>
 
-        <div>
+        <div className="flex flex-col gap-4">
           {assets.map((asset, i) => (
             <AssetManifestRow key={asset.id} asset={asset} index={i} />
           ))}

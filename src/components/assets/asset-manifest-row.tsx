@@ -44,7 +44,7 @@ export function AssetManifestRow({
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06, duration: 0.3 }}
-      className="group border-b border-white/15 py-8 first:pt-0 last:border-b-0"
+      className="group border border-white/25 bg-black px-6 py-8 sm:px-8"
     >
       {/* Primary rail */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
