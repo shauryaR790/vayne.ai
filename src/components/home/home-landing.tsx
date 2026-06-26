@@ -2,23 +2,22 @@
 
 import { Plus, Mic } from "lucide-react";
 
-import { TypingAnimation } from "@/components/ui/typing-animation";
+import { HyperText } from "@/components/ui/hyper-text";
 
 export function HomeLanding() {
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center px-6 py-12">
       <div className="w-full max-w-3xl text-center">
-        <TypingAnimation
+        <HyperText
           as="h1"
-          typeSpeed={50}
+          duration={1200}
+          delay={200}
           startOnView={false}
-          showCursor
-          blinkCursor
-          cursorStyle="block"
+          animateOnHover
           className="text-brutal text-4xl font-black uppercase sm:text-6xl lg:text-7xl"
         >
           WELCOME BACK
-        </TypingAnimation>
+        </HyperText>
 
         <div className="mx-auto mt-14 w-full max-w-2xl border border-white bg-black">
           <div className="flex items-center gap-3 px-4 py-4">
