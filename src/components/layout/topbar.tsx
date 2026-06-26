@@ -17,9 +17,15 @@ export function Topbar() {
       </p>
 
       <div className="flex items-center gap-2">
-        {pathname !== "/" && (
+        {pathname === "/report" && (
           <Button variant="secondary" size="sm" asChild>
             <Link href="/">Home</Link>
+          </Button>
+        )}
+
+        {pathname === "/" && (
+          <Button variant="secondary" size="sm" asChild>
+            <Link href="/report">Report</Link>
           </Button>
         )}
 
