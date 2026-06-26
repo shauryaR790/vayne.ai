@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { MetricCard } from "./metric-card";
 import { AiSummaryCard } from "./ai-summary-card";
 import { AttackSurfaceCard } from "./attack-surface-card";
-import { RecentActivityCard } from "./recent-activity-card";
+import { ScanTerminal } from "./scan-terminal";
 import { ScansTable } from "./scans-table";
 import { FindingsSection } from "./findings-section";
 import { DashboardSkeleton } from "./dashboard-skeleton";
@@ -70,7 +70,7 @@ export function DashboardContent() {
           </MotionGroup>
 
           <MotionGroup className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <RecentActivityCard />
+            <ScanTerminal />
             <AiSummaryCard />
           </MotionGroup>
 

@@ -27,11 +27,13 @@ export function DashboardSkeleton() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="border border-white p-5">
-          <Skeleton className="h-4 w-40" />
-          <div className="mt-5 space-y-3">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="h-14 w-full" />
+        <div className="border border-white">
+          <div className="border-b border-white/20 p-4">
+            <Skeleton className="h-2 w-12" />
+          </div>
+          <div className="space-y-2 p-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-3 w-full max-w-[90%]" />
             ))}
           </div>
         </div>
