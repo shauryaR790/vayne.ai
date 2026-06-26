@@ -1,17 +1,32 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { ShineBorder } from "./shine-border";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function Card({
+  className,
+  children,
+  shine = true,
+  ...props
+}: React.ComponentProps<"div"> & { shine?: boolean }) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "glass rounded-[var(--radius-card)] text-foreground",
+        "glass relative overflow-hidden rounded-[var(--radius-card)] text-foreground",
         className
       )}
       {...props}
-    />
+    >
+      {shine && (
+        <ShineBorder
+          borderWidth={1}
+          duration={14}
+          shineColor={["rgba(255,90,31,0.7)", "rgba(255,255,255,0.35)"]}
+        />
+      )}
+      {children}
+    </div>
   );
 }
 

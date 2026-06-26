@@ -12,6 +12,7 @@ import {
 } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { MotionItem } from "./motion";
 
 const severityBar: Record<Severity, string> = {
@@ -32,9 +33,14 @@ function FindingCard({ finding, index }: { finding: Finding; index: number }) {
       whileHover={{ y: -3 }}
       className="glass glass-hover group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] hover:border-border-strong"
     >
+      <ShineBorder
+        borderWidth={1}
+        duration={14}
+        shineColor={["rgba(255,90,31,0.7)", "rgba(255,255,255,0.35)"]}
+      />
       <span
         className={cn(
-          "absolute inset-y-0 left-0 w-[3px]",
+          "absolute inset-y-0 left-0 z-10 w-[3px]",
           severityBar[finding.severity]
         )}
       />

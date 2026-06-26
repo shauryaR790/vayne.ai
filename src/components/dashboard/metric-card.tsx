@@ -4,23 +4,25 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { Metric } from "@/lib/mock-data";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { MotionItem } from "./motion";
-import { Sparkline } from "./sparkline";
 
 export function MetricCard({ metric }: { metric: Metric }) {
   const TrendIcon = metric.trend === "up" ? ArrowUpRight : ArrowDownRight;
-  const sparkColor = metric.positive
-    ? "var(--color-success)"
-    : "var(--color-accent)";
 
   return (
     <MotionItem
       whileHover={{ y: -3 }}
-      className="glass glass-hover group relative overflow-hidden rounded-[var(--radius-card)] p-5 hover:border-border-strong hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.8)]"
+      className="glass glass-hover group relative overflow-hidden rounded-[var(--radius-card)] p-5 hover:border-border-strong"
     >
+      <ShineBorder
+        borderWidth={1}
+        duration={14}
+        shineColor={["rgba(255,90,31,0.7)", "rgba(255,255,255,0.35)"]}
+      />
       <div className="pointer-events-none absolute -right-10 -top-12 size-32 rounded-full bg-accent/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 
-      <div className="flex items-start justify-between">
+      <div className="relative flex items-center justify-between">
         <p className="text-[13px] font-medium text-muted">{metric.label}</p>
         <span
           className={cn(
@@ -35,20 +37,13 @@ export function MetricCard({ metric }: { metric: Metric }) {
         </span>
       </div>
 
-      <div className="mt-3 flex items-end justify-between gap-3">
-        <div>
-          <p className="text-[32px] font-semibold leading-none tracking-tight">
-            {metric.value}
-          </p>
-          <p className="mt-2 text-[11.5px] text-muted-foreground">
-            {metric.hint}
-          </p>
-        </div>
-        <Sparkline
-          data={metric.spark}
-          color={sparkColor}
-          className="h-9 w-24 opacity-90"
-        />
+      <div className="relative mt-5">
+        <p className="text-[34px] font-semibold leading-none tracking-tight">
+          {metric.value}
+        </p>
+        <p className="mt-2.5 text-[11.5px] text-muted-foreground">
+          {metric.hint}
+        </p>
       </div>
     </MotionItem>
   );
