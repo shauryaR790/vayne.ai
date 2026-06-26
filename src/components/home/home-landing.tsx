@@ -32,7 +32,7 @@ export function HomeLanding() {
 
             <input
               type="text"
-              placeholder="Ask VAYNE"
+              placeholder="Enter your target"
               className="min-w-0 flex-1 bg-transparent text-base font-medium text-white outline-none placeholder:text-white/40"
             />
 
