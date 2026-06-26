@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import type { AttackPath, AttackPathNode } from "@/lib/mock-data";
-import { AttackChainTimeline } from "@/components/attack-paths/attack-chain-timeline";
 import { ProgressBar, RiskMeter } from "@/components/shared/risk-meter";
 import {
   MetricTile,
@@ -30,10 +29,8 @@ function PathNode({
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: index * 0.08 }}
         className={cn(
-          "relative w-full max-w-sm border px-5 py-4 transition-colors",
-          active
-            ? "border-white bg-white/[0.06]"
-            : "border-white/25 bg-black"
+          "relative w-full max-w-sm border border-white px-5 py-4",
+          active && "bg-white/[0.06]"
         )}
       >
         {active && (
@@ -105,7 +102,6 @@ export function AttackPathInvestigation({ path }: { path: AttackPath }) {
             />
           ))}
         </div>
-        <AttackChainTimeline nodes={path.nodes} />
       </div>
 
       <div className="grid grid-cols-2 gap-px bg-black sm:grid-cols-4">

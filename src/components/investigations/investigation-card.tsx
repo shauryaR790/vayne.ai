@@ -39,7 +39,6 @@ export function InvestigationCard({ finding }: { finding: Finding }) {
       subtitle={
         <p className="font-mono text-[12px] text-white/50">{finding.asset}</p>
       }
-      trailing={<ConfidenceRing value={finding.confidence} size={52} />}
     >
       <div className="flex flex-col gap-5 border-b border-white/15 p-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="grid flex-1 grid-cols-2 gap-x-6 gap-y-3 text-[13px] sm:grid-cols-4">

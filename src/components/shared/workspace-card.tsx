@@ -15,12 +15,8 @@ export function WorkspaceCard({
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -2 }}
       transition={{ duration: 0.25 }}
-      className={cn(
-        "group block border border-white/25 bg-black transition-colors hover:border-white/50 hover:bg-white/[0.03]",
-        className
-      )}
+      className={cn("group block border border-white/25 bg-black", className)}
     >
       {children}
     </motion.div>

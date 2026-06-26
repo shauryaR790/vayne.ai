@@ -33,7 +33,7 @@ export function CollapsibleWorkspaceCard({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex w-full items-start justify-between gap-4 p-5 text-left transition-colors hover:bg-white/[0.03]"
+        className="flex w-full items-start justify-between gap-4 p-5 text-left"
       >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-3">{title}</div>
@@ -46,7 +46,7 @@ export function CollapsibleWorkspaceCard({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Collapse" : expandLabel}
-        className="group/bar flex w-full flex-col border-t border-white/15 transition-colors hover:bg-white/[0.04]"
+        className="group/bar flex w-full flex-col border-t border-white/15"
       >
         {previewValue !== undefined && (
           <div className="h-1 w-full bg-white/10">
@@ -59,8 +59,8 @@ export function CollapsibleWorkspaceCard({
           </div>
         )}
         <div className="flex items-center gap-3 px-5 py-3">
-          <div className="h-px flex-1 bg-white/15 transition-colors group-hover/bar:bg-white/30" />
-          <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-colors group-hover/bar:text-white/70">
+          <div className="h-px flex-1 bg-white/15" />
+          <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
             {open ? "Collapse" : expandLabel}
             <ChevronDown
               className={cn(
@@ -69,7 +69,7 @@ export function CollapsibleWorkspaceCard({
               )}
             />
           </span>
-          <div className="h-px flex-1 bg-white/15 transition-colors group-hover/bar:bg-white/30" />
+          <div className="h-px flex-1 bg-white/15" />
         </div>
       </button>
 
