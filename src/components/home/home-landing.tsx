@@ -17,7 +17,7 @@ export function HomeLanding() {
           cursorStyle="block"
           className="text-brutal text-4xl font-black uppercase sm:text-6xl lg:text-7xl"
         >
-          WELCOME BACK SHAURYA
+          WELCOME BACK
         </TypingAnimation>
 
         <div className="mx-auto mt-14 w-full max-w-2xl border border-white bg-black">
