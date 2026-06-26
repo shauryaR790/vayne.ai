@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { CalendarDays, RefreshCw, Sparkles } from "lucide-react";
+import { CalendarDays, RefreshCw } from "lucide-react";
 
 import { metrics } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { RecentActivityCard } from "./recent-activity-card";
 import { ScansTable } from "./scans-table";
 import { FindingsSection } from "./findings-section";
 import { DashboardSkeleton } from "./dashboard-skeleton";
-import { MotionGroup, MotionItem } from "./motion";
+import { MotionGroup } from "./motion";
 
 export function DashboardContent() {
   const [loading, setLoading] = useState(true);
@@ -24,35 +24,30 @@ export function DashboardContent() {
   }, []);
 
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-5 py-7 lg:px-8">
-      {/* Header */}
-      <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mx-auto w-full max-w-[1200px] px-5 py-8 lg:px-8">
+      <div className="mb-8 flex flex-col gap-4 border-b border-white pb-6 sm:flex-row sm:items-end sm:justify-between">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
         >
-          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-accent/20 bg-accent-soft px-2.5 py-1 text-[11px] font-medium text-accent">
-            <Sparkles className="size-3" />
-            AI copilot enabled
-          </div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-balance">
+          <h1 className="text-2xl font-bold uppercase tracking-[0.08em]">
             Overview
           </h1>
-          <p className="mt-1 text-[14px] text-muted">
-            Your attack surface changed in the last 24 hours.
+          <p className="mt-2 text-[12px] uppercase tracking-wider text-white/50">
+            Your attack surface changed in the last 24 hours
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.08 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
           className="flex items-center gap-2"
         >
           <Button variant="secondary" size="sm">
             <CalendarDays className="size-4" />
-            Last 24 hours
+            Last 24h
           </Button>
           <Button variant="secondary" size="icon">
             <RefreshCw className="size-4" />
@@ -64,40 +59,32 @@ export function DashboardContent() {
         <DashboardSkeleton />
       ) : (
         <div className="space-y-6">
-          {/* Metric cards */}
-          <MotionGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <MotionGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map((metric) => (
               <MetricCard key={metric.id} metric={metric} />
             ))}
           </MotionGroup>
 
-          {/* Second row */}
-          <MotionGroup className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-4">
-              <RecentActivityCard />
-            </div>
-            <div className="xl:col-span-5">
-              <AttackSurfaceCard />
-            </div>
-            <div className="xl:col-span-3">
-              <AiSummaryCard />
-            </div>
+          <MotionGroup>
+            <AttackSurfaceCard />
           </MotionGroup>
 
-          {/* Scans table */}
+          <MotionGroup className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <RecentActivityCard />
+            <AiSummaryCard />
+          </MotionGroup>
+
           <MotionGroup>
             <ScansTable />
           </MotionGroup>
 
-          {/* Findings */}
           <MotionGroup>
             <FindingsSection />
           </MotionGroup>
 
-          <MotionItem className="pt-2 text-center text-[11.5px] text-muted-foreground">
-            VAYNE · Attack surface monitored continuously · Data shown is
-            simulated
-          </MotionItem>
+          <p className="border-t border-white/20 pt-6 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+            VAYNE — Simulated data
+          </p>
         </div>
       )}
     </div>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { attackSurface, surfaceTrend } from "@/lib/mock-data";
@@ -14,83 +13,66 @@ export function AttackSurfaceCard() {
   const max = Math.max(...surfaceTrend.map((p) => p.discovered));
 
   return (
-    <MotionItem className="h-full">
-      <Card className="h-full">
+    <MotionItem>
+      <Card>
         <CardHeader>
           <div>
             <CardTitle>Attack Surface Overview</CardTitle>
-            <p className="text-[12px] text-muted">Discovered vs. resolved</p>
+            <p className="mt-1 text-[11px] uppercase tracking-wider text-white/50">
+              Discovered vs resolved
+            </p>
           </div>
-          <div className="flex rounded-full border border-border bg-white/[0.03] p-0.5">
+          <div className="flex border border-white">
             {(["monthly", "yearly"] as const).map((r) => (
               <button
                 key={r}
                 onClick={() => setRange(r)}
                 className={cn(
-                  "relative rounded-full px-3 py-1 text-[11.5px] font-medium capitalize transition-colors",
-                  range === r ? "text-white" : "text-muted hover:text-foreground"
+                  "px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
+                  range === r
+                    ? "bg-white text-black"
+                    : "text-white/60 hover:text-white"
                 )}
               >
-                {range === r && (
-                  <motion.span
-                    layoutId="range-pill"
-                    className="absolute inset-0 rounded-full bg-accent"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <span className="relative">{r}</span>
+                {r}
               </button>
             ))}
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-5">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {attackSurface.map((stat) => {
-              const positive = stat.delta >= 0;
-              return (
-                <div
-                  key={stat.id}
-                  className="rounded-2xl border border-border bg-white/[0.02] p-3"
-                >
-                  <p className="text-[11.5px] text-muted">{stat.label}</p>
-                  <p className="mt-1.5 text-xl font-semibold tracking-tight">
-                    {stat.value.toLocaleString()}
-                  </p>
-                  <div className="mt-2 flex items-center justify-between">
-                    <div className="h-1 w-full max-w-[60%] overflow-hidden rounded-full bg-white/[0.06]">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${stat.ratio * 100}%` }}
-                        transition={{ duration: 0.9, ease: "easeOut" }}
-                        className="h-full rounded-full"
-                        style={{ background: stat.color }}
-                      />
-                    </div>
-                    <span
-                      className={cn(
-                        "inline-flex items-center text-[10.5px] font-semibold",
-                        positive
-                          ? "text-[var(--color-success)]"
-                          : "text-[var(--color-critical)]"
-                      )}
-                    >
-                      {positive ? (
-                        <ArrowUpRight className="size-3" />
-                      ) : (
-                        <ArrowDownRight className="size-3" />
-                      )}
-                      {Math.abs(stat.delta)}
-                    </span>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-2 gap-px border border-white bg-white sm:grid-cols-4">
+            {attackSurface.map((stat) => (
+              <div
+                key={stat.id}
+                className="bg-black p-4"
+              >
+                <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  {stat.label}
+                </p>
+                <p className="mt-2 text-2xl font-bold tracking-tight">
+                  {stat.value.toLocaleString()}
+                </p>
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="h-px flex-1 overflow-hidden bg-white/20">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${stat.ratio * 100}%` }}
+                      transition={{ duration: 0.9, ease: "easeOut" }}
+                      className="h-full bg-white"
+                    />
                   </div>
+                  <span className="text-[10px] font-bold text-white/60">
+                    {stat.delta >= 0 ? "+" : ""}
+                    {stat.delta}
+                  </span>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
-          {/* Bar chart */}
           <div>
-            <div className="flex h-44 items-end gap-3">
+            <div className="flex h-40 items-end gap-1 border-b border-white pb-2">
               {surfaceTrend.map((p, i) => {
                 const dH = (p.discovered / max) * 100;
                 const rH = (p.resolved / max) * 100;
@@ -99,7 +81,7 @@ export function AttackSurfaceCard() {
                     key={p.label}
                     className="group flex flex-1 flex-col items-center gap-2"
                   >
-                    <div className="relative flex h-full w-full items-end justify-center gap-1">
+                    <div className="relative flex h-full w-full items-end justify-center gap-0.5">
                       <motion.div
                         initial={{ height: 0 }}
                         animate={{ height: `${dH}%` }}
@@ -108,7 +90,7 @@ export function AttackSurfaceCard() {
                           delay: i * 0.05,
                           ease: "easeOut",
                         }}
-                        className="w-2.5 rounded-full bg-gradient-to-t from-accent/40 to-accent"
+                        className="w-3 bg-white"
                       />
                       <motion.div
                         initial={{ height: 0 }}
@@ -118,30 +100,22 @@ export function AttackSurfaceCard() {
                           delay: i * 0.05 + 0.1,
                           ease: "easeOut",
                         }}
-                        className="w-2.5 rounded-full bg-white/10"
+                        className="w-3 bg-white/30"
                       />
-                      <div className="pointer-events-none absolute -top-1 left-1/2 z-10 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-lg border border-border bg-elevated px-2.5 py-1.5 text-[11px] opacity-0 shadow-xl transition-opacity duration-200 group-hover:opacity-100">
-                        <span className="block text-accent">
-                          {p.discovered} discovered
-                        </span>
-                        <span className="block text-muted">
-                          {p.resolved} resolved
-                        </span>
-                      </div>
                     </div>
-                    <span className="text-[11px] text-muted-foreground">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/40">
                       {p.label}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <div className="mt-4 flex items-center gap-4 text-[11.5px] text-muted">
-              <span className="flex items-center gap-1.5">
-                <span className="size-2 rounded-full bg-accent" /> Discovered
+            <div className="mt-3 flex items-center gap-6 text-[10px] font-bold uppercase tracking-wider text-white/50">
+              <span className="flex items-center gap-2">
+                <span className="size-2 bg-white" /> Discovered
               </span>
-              <span className="flex items-center gap-1.5">
-                <span className="size-2 rounded-full bg-white/25" /> Resolved
+              <span className="flex items-center gap-2">
+                <span className="size-2 bg-white/30" /> Resolved
               </span>
             </div>
           </div>

@@ -4,21 +4,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium tracking-wide transition-colors",
+  "inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
   {
     variants: {
       variant: {
-        default: "border-border bg-white/[0.04] text-muted",
-        critical:
-          "border-[var(--color-critical)]/25 bg-[var(--color-critical)]/10 text-[var(--color-critical)]",
-        high: "border-[var(--color-high)]/25 bg-[var(--color-high)]/10 text-[var(--color-high)]",
-        medium:
-          "border-[var(--color-medium)]/25 bg-[var(--color-medium)]/10 text-[var(--color-medium)]",
-        low: "border-[var(--color-low)]/25 bg-[var(--color-low)]/10 text-[var(--color-low)]",
-        success:
-          "border-[var(--color-success)]/25 bg-[var(--color-success)]/10 text-[var(--color-success)]",
-        accent:
-          "border-accent/30 bg-accent-soft text-accent",
+        default: "border-white/40 text-white/70",
+        critical: "border-white bg-white text-black",
+        high: "border-white text-white",
+        medium: "border-white/60 text-white/80",
+        low: "border-white/30 text-white/50",
+        success: "border-white text-white",
+        accent: "border-white bg-white text-black",
       },
     },
     defaultVariants: {
