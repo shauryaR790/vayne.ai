@@ -160,10 +160,10 @@ export default async function InvestigationPage({
 
         <div className="mt-8">
           <Link
-            href="/findings"
+            href="/investigations"
             className="text-[11px] font-bold uppercase tracking-wider text-white/50 hover:text-white"
           >
-            ← Back to findings
+            ← Back to investigations
           </Link>
         </div>
       </div>

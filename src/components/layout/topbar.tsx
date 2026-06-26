@@ -11,7 +11,6 @@ const segmentMap: Record<string, string> = {
   "/report": "Reports",
   "/assets": "Assets",
   "/scans": "Scans",
-  "/findings": "Findings",
   "/attack-paths": "Attack Paths",
   "/investigations": "Investigations",
 };

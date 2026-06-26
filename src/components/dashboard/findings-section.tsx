@@ -129,7 +129,7 @@ export function FindingsSection({
           <div className="flex items-center gap-2">
             <AskVayneButton />
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/findings">
+              <Link href="/investigations">
                 View all
                 <ArrowRight className="size-3.5" />
               </Link>

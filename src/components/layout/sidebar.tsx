@@ -9,7 +9,6 @@ const navItems = [
   { id: "home", label: "Home", href: "/" },
   { id: "assets", label: "Assets", href: "/assets" },
   { id: "scans", label: "Scans", href: "/scans" },
-  { id: "findings", label: "Findings", href: "/findings" },
   { id: "attack-paths", label: "Attack Paths", href: "/attack-paths" },
   { id: "reports", label: "Reports", href: "/report" },
   { id: "investigations", label: "Investigations", href: "/investigations" },
