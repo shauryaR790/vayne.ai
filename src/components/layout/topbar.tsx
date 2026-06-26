@@ -6,9 +6,25 @@ import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
+const segmentMap: Record<string, string> = {
+  "/": "Home",
+  "/report": "Reports",
+  "/assets": "Assets",
+  "/scans": "Scans",
+  "/findings": "Findings",
+  "/attack-paths": "Attack Paths",
+  "/investigations": "Investigations",
+};
+
 export function Topbar() {
   const pathname = usePathname();
-  const segment = pathname === "/report" ? "Report" : "Home";
+
+  let segment = "Home";
+  if (pathname.startsWith("/investigations/")) {
+    segment = "Investigation";
+  } else {
+    segment = segmentMap[pathname] ?? "Home";
+  }
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-white bg-black px-5 lg:px-8">
@@ -17,15 +33,21 @@ export function Topbar() {
       </p>
 
       <div className="flex items-center gap-2">
-        {pathname === "/report" && (
+        {pathname !== "/" && (
           <Button variant="secondary" size="sm" asChild>
             <Link href="/">Home</Link>
           </Button>
         )}
 
+        {pathname !== "/report" && pathname !== "/" && (
+          <Button variant="secondary" size="sm" asChild>
+            <Link href="/report">Reports</Link>
+          </Button>
+        )}
+
         {pathname === "/" && (
           <Button variant="secondary" size="sm" asChild>
-            <Link href="/report">Report</Link>
+            <Link href="/report">Reports</Link>
           </Button>
         )}
 

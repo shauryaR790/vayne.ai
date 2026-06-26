@@ -1,6 +1,6 @@
 /**
- * Mock cybersecurity data for the VAYNE dashboard.
- * Frontend-only — no backend. Shaped to resemble a real attack-surface platform.
+ * Mock cybersecurity data for VAYNE.
+ * Frontend-only — shaped for demo workflows and investigations.
  */
 
 export type Severity = "critical" | "high" | "medium" | "low";
@@ -12,10 +12,8 @@ export type Metric = {
   value: string;
   delta: string;
   trend: "up" | "down";
-  // whether an upward trend is good (green) or bad (red)
   positive: boolean;
   hint: string;
-  spark: number[];
 };
 
 export const metrics: Metric[] = [
@@ -27,7 +25,6 @@ export const metrics: Metric[] = [
     trend: "up",
     positive: false,
     hint: "3 new in last 24h",
-    spark: [6, 8, 7, 9, 11, 10, 14],
   },
   {
     id: "false-positives",
@@ -37,7 +34,6 @@ export const metrics: Metric[] = [
     trend: "down",
     positive: true,
     hint: "Auto-triaged by AI",
-    spark: [52, 49, 48, 44, 41, 39, 37],
   },
   {
     id: "new-assets",
@@ -47,7 +43,6 @@ export const metrics: Metric[] = [
     trend: "up",
     positive: true,
     hint: "Discovered this week",
-    spark: [10, 12, 15, 14, 19, 22, 26],
   },
   {
     id: "time-saved",
@@ -57,70 +52,30 @@ export const metrics: Metric[] = [
     trend: "up",
     positive: true,
     hint: "vs. manual triage",
-    spark: [18, 22, 27, 30, 34, 38, 41],
   },
 ];
 
-export type AttackSurfaceStat = {
-  id: string;
-  label: string;
-  value: number;
-  delta: number;
-  // 0..1 share used for the radial / bar visualization
-  ratio: number;
-  color: string;
+export const executiveSummary = {
+  lastUpdated: "8m ago",
+  surfaceIncrease: "14%",
+  criticalFindings: 14,
+  falsePositivesValidated: 37,
+  highRiskPaths: 1,
+  hoursSaved: 41,
 };
 
-export const attackSurface: AttackSurfaceStat[] = [
-  {
-    id: "assets",
-    label: "Assets Discovered",
-    value: 1284,
-    delta: 26,
-    ratio: 1,
-    color: "var(--color-accent)",
-  },
-  {
-    id: "live-hosts",
-    label: "Live Hosts",
-    value: 612,
-    delta: 14,
-    ratio: 0.48,
-    color: "var(--color-info)",
-  },
-  {
-    id: "open-ports",
-    label: "Open Ports",
-    value: 3471,
-    delta: 58,
-    ratio: 0.72,
-    color: "var(--color-low)",
-  },
-  {
-    id: "vulnerabilities",
-    label: "Vulnerabilities",
-    value: 208,
-    delta: -11,
-    ratio: 0.36,
-    color: "var(--color-high)",
-  },
+export const recentTargets = [
+  "tesla.com",
+  "stripe.com",
+  "openai.com",
+  "github.com",
 ];
 
-// Monthly discovery vs. resolved for the attack surface chart
-export type ChartPoint = {
-  label: string;
-  discovered: number;
-  resolved: number;
-};
-
-export const surfaceTrend: ChartPoint[] = [
-  { label: "Jan", discovered: 120, resolved: 90 },
-  { label: "Feb", discovered: 168, resolved: 110 },
-  { label: "Mar", discovered: 142, resolved: 130 },
-  { label: "Apr", discovered: 205, resolved: 150 },
-  { label: "May", discovered: 248, resolved: 190 },
-  { label: "Jun", discovered: 286, resolved: 240 },
-  { label: "Jul", discovered: 312, resolved: 268 },
+export const quickScanTypes = [
+  { id: "surface", label: "Surface Scan" },
+  { id: "webapp", label: "Web App Scan" },
+  { id: "api", label: "API Recon" },
+  { id: "internal", label: "Internal Network" },
 ];
 
 export type AiInsight = {
@@ -174,6 +129,7 @@ export type Scan = {
   critical: number;
   status: ScanStatus;
   time: string;
+  analystHoursSaved: string;
   progress?: number;
 };
 
@@ -186,6 +142,7 @@ export const recentScans: Scan[] = [
     critical: 5,
     status: "completed",
     time: "12m ago",
+    analystHoursSaved: "41h",
   },
   {
     id: "scan-2",
@@ -195,6 +152,7 @@ export const recentScans: Scan[] = [
     critical: 2,
     status: "running",
     time: "now",
+    analystHoursSaved: "12h",
     progress: 64,
   },
   {
@@ -205,6 +163,7 @@ export const recentScans: Scan[] = [
     critical: 7,
     status: "completed",
     time: "1h ago",
+    analystHoursSaved: "28h",
   },
   {
     id: "scan-4",
@@ -214,6 +173,7 @@ export const recentScans: Scan[] = [
     critical: 0,
     status: "completed",
     time: "3h ago",
+    analystHoursSaved: "6h",
   },
   {
     id: "scan-5",
@@ -223,6 +183,7 @@ export const recentScans: Scan[] = [
     critical: 1,
     status: "queued",
     time: "scheduled",
+    analystHoursSaved: "—",
   },
   {
     id: "scan-6",
@@ -232,6 +193,7 @@ export const recentScans: Scan[] = [
     critical: 0,
     status: "failed",
     time: "4h ago",
+    analystHoursSaved: "0h",
   },
 ];
 
@@ -242,6 +204,9 @@ export type Finding = {
   severity: Severity;
   confidence: number;
   asset: string;
+  exploitability: string;
+  businessImpact: string;
+  aiReasoning: string;
   explanation: string;
 };
 
@@ -253,8 +218,12 @@ export const recentFindings: Finding[] = [
     severity: "critical",
     confidence: 97,
     asset: "edge-01.vayne-corp.io",
+    exploitability: "High",
+    businessImpact: "Production compromise",
+    aiReasoning:
+      "Version fingerprint matches known vulnerable release. Safe PoC confirmed RCE.",
     explanation:
-      "An unauthenticated attacker can achieve remote code execution via a crafted request. VAYNE confirmed exploitability with a safe proof-of-concept.",
+      "An unauthenticated attacker can achieve remote code execution via a crafted request.",
   },
   {
     id: "f-2",
@@ -262,8 +231,12 @@ export const recentFindings: Finding[] = [
     severity: "high",
     confidence: 91,
     asset: "assets-vayne-prod",
+    exploitability: "High",
+    businessImpact: "Production compromise",
+    aiReasoning:
+      "Public write access enabled on production asset bucket. CDN supply-chain risk.",
     explanation:
-      "Bucket allows public PUT operations, enabling content tampering and supply-chain injection into your CDN.",
+      "Bucket allows public PUT operations, enabling content tampering and supply-chain injection.",
   },
   {
     id: "f-3",
@@ -271,8 +244,12 @@ export const recentFindings: Finding[] = [
     severity: "critical",
     confidence: 88,
     asset: "github.com/vayne/infra",
+    exploitability: "High",
+    businessImpact: "Account takeover",
+    aiReasoning:
+      "Long-lived key in public repo grants read access to production secrets.",
     explanation:
-      "A long-lived AWS key was committed to a public repo. It grants read access to production secrets — chainable to a full account takeover.",
+      "A long-lived AWS key was committed to a public repo — chainable to full account takeover.",
   },
   {
     id: "f-4",
@@ -280,15 +257,268 @@ export const recentFindings: Finding[] = [
     severity: "medium",
     confidence: 72,
     asset: "legacy.vayne-corp.io",
+    exploitability: "Low",
+    businessImpact: "Compliance risk",
+    aiReasoning:
+      "Deprecated TLS accepted. Low active-exploit likelihood but fails compliance baseline.",
     explanation:
-      "Deprecated TLS versions are accepted, exposing sessions to downgrade attacks. Low active-exploit likelihood but a compliance risk.",
+      "Deprecated TLS versions expose sessions to downgrade attacks.",
   },
 ];
 
-export type NavBadge = { count: number; tone: "accent" | "critical" };
-export const navBadges: Record<string, NavBadge> = {
-  findings: { count: 14, tone: "critical" },
-  scans: { count: 3, tone: "accent" },
+export type AttackPathNode = {
+  id: string;
+  label: string;
+};
+
+export type AttackPath = {
+  id: string;
+  title: string;
+  nodes: AttackPathNode[];
+  riskScore: number;
+  likelihood: string;
+  impact: string;
+  exploitability: string;
+};
+
+export const attackPaths: AttackPath[] = [
+  {
+    id: "ap-1",
+    title: "S3 → IAM → Production DB",
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "CDN" },
+      { id: "n3", label: "S3 Bucket" },
+      { id: "n4", label: "IAM" },
+      { id: "n5", label: "Production DB" },
+    ],
+    riskScore: 9.8,
+    likelihood: "High",
+    impact: "Critical",
+    exploitability: "High",
+  },
+  {
+    id: "ap-2",
+    title: "GitHub → AWS Secrets",
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "GitHub" },
+      { id: "n3", label: "Leaked Key" },
+      { id: "n4", label: "Secrets Manager" },
+      { id: "n5", label: "Production" },
+    ],
+    riskScore: 9.2,
+    likelihood: "High",
+    impact: "Critical",
+    exploitability: "High",
+  },
+];
+
+export type Asset = {
+  id: string;
+  hostname: string;
+  ip: string;
+  ports: number[];
+  technologies: string[];
+  findings: number;
+  critical: number;
+  riskLevel: string;
+};
+
+export const assets: Asset[] = [
+  {
+    id: "a-1",
+    hostname: "api.vayne-corp.io",
+    ip: "172.31.44.10",
+    ports: [80, 443, 8080],
+    technologies: ["Apache", "PHP", "Laravel"],
+    findings: 4,
+    critical: 1,
+    riskLevel: "High",
+  },
+  {
+    id: "a-2",
+    hostname: "edge-01.vayne-corp.io",
+    ip: "172.31.44.22",
+    ports: [443],
+    technologies: ["Apache", "mod_ssl"],
+    findings: 6,
+    critical: 2,
+    riskLevel: "Critical",
+  },
+  {
+    id: "a-3",
+    hostname: "auth.vayne-corp.io",
+    ip: "172.31.45.8",
+    ports: [443],
+    technologies: ["nginx", "Node.js"],
+    findings: 2,
+    critical: 0,
+    riskLevel: "Low",
+  },
+  {
+    id: "a-4",
+    hostname: "cdn.vayne-corp.io",
+    ip: "172.31.46.1",
+    ports: [80, 443],
+    technologies: ["CloudFront", "S3"],
+    findings: 3,
+    critical: 1,
+    riskLevel: "Medium",
+  },
+];
+
+export type RemediationStep = {
+  timeframe: string;
+  action: string;
+  done: boolean;
+};
+
+export type Investigation = {
+  id: string;
+  findingId: string;
+  title: string;
+  severity: Severity;
+  confidence: number;
+  rootCause: string;
+  businessImpact: string;
+  aiConfidence: number;
+  exploitTime: string;
+  riskScore: number;
+  nodes: AttackPathNode[];
+  evidence: {
+    resource: string;
+    publicAccess: string;
+    iamKeys: string;
+    exposure: string;
+  };
+  remediation: RemediationStep[];
+};
+
+export const investigations: Record<string, Investigation> = {
+  "f-1": {
+    id: "inv-1",
+    findingId: "f-1",
+    title: "Apache HTTP Server RCE",
+    severity: "critical",
+    confidence: 97,
+    rootCause: "Unpatched Apache 2.4.59 on edge nodes.",
+    businessImpact: "Production compromise via unauthenticated RCE.",
+    aiConfidence: 97,
+    exploitTime: "<5 minutes",
+    riskScore: 9.6,
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "CDN" },
+      { id: "n3", label: "Apache Edge" },
+      { id: "n4", label: "App Server" },
+      { id: "n5", label: "Production DB" },
+    ],
+    evidence: {
+      resource: "edge-01.vayne-corp.io",
+      publicAccess: "Internet-facing",
+      iamKeys: "Not required",
+      exposure: "Port 443, CVE-2024-38476",
+    },
+    remediation: [
+      { timeframe: "Immediate", action: "Patch Apache to 2.4.62+", done: false },
+      { timeframe: "24h", action: "Validate all edge nodes", done: false },
+      { timeframe: "72h", action: "Deploy WAF rule for CVE", done: false },
+      { timeframe: "1 week", action: "Automate version scanning", done: false },
+    ],
+  },
+  "f-2": {
+    id: "inv-2",
+    findingId: "f-2",
+    title: "Exposed S3 Bucket",
+    severity: "high",
+    confidence: 91,
+    rootCause: "Public write access enabled.",
+    businessImpact: "Potential production compromise.",
+    aiConfidence: 94,
+    exploitTime: "<15 minutes",
+    riskScore: 9.8,
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "CDN" },
+      { id: "n3", label: "S3 Bucket" },
+      { id: "n4", label: "IAM Credential" },
+      { id: "n5", label: "Production Database" },
+    ],
+    evidence: {
+      resource: "assets-vayne-prod",
+      publicAccess: "Enabled",
+      iamKeys: "Detected",
+      exposure: "Internet-facing",
+    },
+    remediation: [
+      { timeframe: "Immediate", action: "Close S3 bucket", done: false },
+      { timeframe: "24h", action: "Rotate IAM keys", done: false },
+      { timeframe: "72h", action: "Audit permissions", done: false },
+      { timeframe: "1 week", action: "Rebuild IAM policies", done: false },
+    ],
+  },
+  "f-3": {
+    id: "inv-3",
+    findingId: "f-3",
+    title: "Leaked IAM Access Key",
+    severity: "critical",
+    confidence: 88,
+    rootCause: "AWS key committed to public GitHub repository.",
+    businessImpact: "Full account takeover possible.",
+    aiConfidence: 92,
+    exploitTime: "<10 minutes",
+    riskScore: 9.4,
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "GitHub" },
+      { id: "n3", label: "Leaked Key" },
+      { id: "n4", label: "Secrets Manager" },
+      { id: "n5", label: "Production" },
+    ],
+    evidence: {
+      resource: "github.com/vayne/infra",
+      publicAccess: "Public repo",
+      iamKeys: "AKIA...exposed",
+      exposure: "Internet-facing",
+    },
+    remediation: [
+      { timeframe: "Immediate", action: "Revoke exposed key", done: false },
+      { timeframe: "24h", action: "Rotate all production secrets", done: false },
+      { timeframe: "72h", action: "Enable secret scanning", done: false },
+      { timeframe: "1 week", action: "Migrate to OIDC auth", done: false },
+    ],
+  },
+  "f-4": {
+    id: "inv-4",
+    findingId: "f-4",
+    title: "Outdated TLS Configuration",
+    severity: "medium",
+    confidence: 72,
+    rootCause: "TLS 1.0 still enabled on legacy endpoint.",
+    businessImpact: "Compliance and session downgrade risk.",
+    aiConfidence: 78,
+    exploitTime: "Hours",
+    riskScore: 5.2,
+    nodes: [
+      { id: "n1", label: "Internet" },
+      { id: "n2", label: "Legacy Host" },
+      { id: "n3", label: "TLS 1.0" },
+      { id: "n4", label: "Session Data" },
+    ],
+    evidence: {
+      resource: "legacy.vayne-corp.io",
+      publicAccess: "Internet-facing",
+      iamKeys: "N/A",
+      exposure: "Port 443, TLS 1.0",
+    },
+    remediation: [
+      { timeframe: "Immediate", action: "Disable TLS 1.0/1.1", done: false },
+      { timeframe: "24h", action: "Update cipher suites", done: false },
+      { timeframe: "72h", action: "Compliance scan", done: false },
+      { timeframe: "1 week", action: "Decommission legacy host", done: false },
+    ],
+  },
 };
 
 export const severityLabel: Record<Severity, string> = {
@@ -297,3 +527,7 @@ export const severityLabel: Record<Severity, string> = {
   medium: "Medium",
   low: "Low",
 };
+
+export function getInvestigation(id: string): Investigation | undefined {
+  return investigations[id];
+}

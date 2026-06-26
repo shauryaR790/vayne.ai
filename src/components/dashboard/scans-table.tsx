@@ -46,6 +46,9 @@ export function ScansTable() {
                 <th className="border-b border-white/20 px-5 py-3">Critical</th>
                 <th className="border-b border-white/20 px-5 py-3">Status</th>
                 <th className="border-b border-white/20 px-5 py-3">Time</th>
+                <th className="border-b border-white/20 px-5 py-3">
+                  Analyst Hrs Saved
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -74,6 +77,9 @@ export function ScansTable() {
                   </td>
                   <td className="px-5 py-3.5 text-[11px] uppercase tracking-wider text-white/50">
                     {scan.time}
+                  </td>
+                  <td className="px-5 py-3.5 text-[12px] font-bold">
+                    {scan.analystHoursSaved}
                   </td>
                 </motion.tr>
               ))}

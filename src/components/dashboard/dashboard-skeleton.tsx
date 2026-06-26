@@ -2,9 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function CardShell({ className }: { className?: string }) {
   return (
-    <div
-      className={`border border-white bg-black p-5 ${className ?? ""}`}
-    >
+    <div className={`border border-white bg-black p-5 ${className ?? ""}`}>
       <Skeleton className="h-3 w-28" />
       <Skeleton className="mt-4 h-8 w-20" />
       <Skeleton className="mt-3 h-3 w-32" />
@@ -15,15 +13,15 @@ function CardShell({ className }: { className?: string }) {
 export function DashboardSkeleton() {
   return (
     <div className="space-y-6">
+      <div className="border border-white p-5">
+        <Skeleton className="h-4 w-40" />
+        <Skeleton className="mt-4 h-20 w-full" />
+      </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <CardShell key={i} />
         ))}
-      </div>
-
-      <div className="border border-white p-5">
-        <Skeleton className="h-4 w-48" />
-        <Skeleton className="mt-5 h-44 w-full" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

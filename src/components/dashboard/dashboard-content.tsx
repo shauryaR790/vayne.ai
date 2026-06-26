@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { CalendarDays, RefreshCw } from "lucide-react";
 
-import { metrics } from "@/lib/mock-data";
+import { metrics, executiveSummary } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
+import { AskVayneButton } from "@/components/shared/ask-vayne-button";
 import { MetricCard } from "./metric-card";
 import { AiSummaryCard } from "./ai-summary-card";
-import { AttackSurfaceCard } from "./attack-surface-card";
 import { ScanTerminal } from "./scan-terminal";
 import { ScansTable } from "./scans-table";
 import { FindingsSection } from "./findings-section";
+import { ExecutiveSummary } from "./executive-summary";
 import { DashboardSkeleton } from "./dashboard-skeleton";
 import { MotionGroup } from "./motion";
 
@@ -31,9 +32,12 @@ export function DashboardContent() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-brutal text-4xl font-black uppercase sm:text-5xl">
-            Report
+          <h1 className="text-brutal text-2xl font-black uppercase tracking-[0.06em] sm:text-3xl">
+            Attack Surface Overview
           </h1>
+          <p className="mt-2 text-[11px] font-bold uppercase tracking-wider text-white/50">
+            Last updated: {executiveSummary.lastUpdated}
+          </p>
         </motion.div>
 
         <motion.div
@@ -42,6 +46,7 @@ export function DashboardContent() {
           transition={{ duration: 0.4, delay: 0.05 }}
           className="flex items-center gap-2"
         >
+          <AskVayneButton />
           <Button variant="secondary" size="sm">
             <CalendarDays className="size-4" />
             Last 24h
@@ -56,14 +61,14 @@ export function DashboardContent() {
         <DashboardSkeleton />
       ) : (
         <div className="space-y-6">
+          <MotionGroup>
+            <ExecutiveSummary />
+          </MotionGroup>
+
           <MotionGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map((metric) => (
               <MetricCard key={metric.id} metric={metric} />
             ))}
-          </MotionGroup>
-
-          <MotionGroup>
-            <AttackSurfaceCard />
           </MotionGroup>
 
           <MotionGroup className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -76,7 +81,7 @@ export function DashboardContent() {
           </MotionGroup>
 
           <MotionGroup>
-            <FindingsSection />
+            <FindingsSection linkToInvestigation />
           </MotionGroup>
 
           <p className="border-t border-white/20 pt-6 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
