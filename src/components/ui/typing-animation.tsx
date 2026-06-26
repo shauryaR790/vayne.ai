@@ -226,7 +226,10 @@ export function TypingAnimation({
       {displayedText}
       {shouldShowCursor && (
         <span
-          className={cn("inline-block", blinkCursor && "animate-blink-cursor")}
+          className={cn(
+            "inline-block align-baseline text-[0.85em] font-black",
+            blinkCursor && "animate-blink-cursor"
+          )}
         >
           {getCursorChar()}
         </span>

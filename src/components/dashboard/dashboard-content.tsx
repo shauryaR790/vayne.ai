@@ -38,8 +38,8 @@ export function DashboardContent() {
             startOnView={false}
             showCursor
             blinkCursor
-            cursorStyle="line"
-            className="text-2xl font-bold uppercase tracking-[0.08em]"
+            cursorStyle="block"
+            className="text-brutal text-4xl font-black uppercase sm:text-5xl lg:text-6xl"
           >
             WELCOME BACK SHAURYA
           </TypingAnimation>

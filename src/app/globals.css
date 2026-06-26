@@ -108,3 +108,13 @@ body {
   );
   animation: shimmer 1.6s infinite;
 }
+
+/* Chunky brutalist display type */
+.text-brutal {
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: geometricPrecision;
+}
