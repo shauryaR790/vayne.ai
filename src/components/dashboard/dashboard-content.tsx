@@ -6,6 +6,7 @@ import { CalendarDays, RefreshCw } from "lucide-react";
 
 import { metrics } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 import { MetricCard } from "./metric-card";
 import { AiSummaryCard } from "./ai-summary-card";
 import { AttackSurfaceCard } from "./attack-surface-card";
@@ -31,12 +32,17 @@ export function DashboardContent() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl font-bold uppercase tracking-[0.08em]">
-            Overview
-          </h1>
-          <p className="mt-2 text-[12px] uppercase tracking-wider text-white/50">
-            Your attack surface changed in the last 24 hours
-          </p>
+          <TypingAnimation
+            as="h1"
+            typeSpeed={55}
+            startOnView={false}
+            showCursor
+            blinkCursor
+            cursorStyle="line"
+            className="text-2xl font-bold uppercase tracking-[0.08em]"
+          >
+            WELCOME BACK SHAURYA
+          </TypingAnimation>
         </motion.div>
 
         <motion.div

@@ -42,6 +42,20 @@
   color-scheme: dark;
 }
 
+@theme inline {
+  --animate-blink-cursor: blink-cursor 1s step-end infinite;
+
+  @keyframes blink-cursor {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
 * {
   border-color: var(--color-border);
 }
