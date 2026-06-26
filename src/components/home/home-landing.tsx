@@ -13,7 +13,7 @@ export function HomeLanding() {
           duration={1200}
           delay={200}
           startOnView={false}
-          animateOnHover
+          animateOnHover={false}
           className="text-brutal text-4xl font-black uppercase sm:text-6xl lg:text-7xl"
         >
           WELCOME BACK
