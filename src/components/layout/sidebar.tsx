@@ -124,8 +124,7 @@ export function Sidebar() {
       </nav>
 
       <div className="border-t border-border p-3">
-        <div className="group relative overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-b from-accent/10 to-transparent p-4">
-          <div className="pointer-events-none absolute -right-6 -top-6 size-24 rounded-full bg-accent/20 blur-2xl" />
+        <div className="group relative overflow-hidden rounded-2xl border border-border bg-surface-raised p-4">
           <p className="relative text-[13px] font-semibold">Upgrade to Enterprise</p>
           <p className="relative mt-1 text-[11.5px] leading-relaxed text-muted">
             Unlimited scans, SSO & continuous monitoring.

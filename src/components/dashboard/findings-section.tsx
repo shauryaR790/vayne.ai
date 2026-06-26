@@ -12,7 +12,7 @@ import {
 } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ShineBorder } from "@/components/ui/shine-border";
+import { MagicCard } from "@/components/ui/magic-card";
 import { MotionItem } from "./motion";
 
 const severityBar: Record<Severity, string> = {
@@ -31,20 +31,16 @@ function FindingCard({ finding, index }: { finding: Finding; index: number }) {
       }}
       transition={{ duration: 0.45, delay: index * 0.05 }}
       whileHover={{ y: -3 }}
-      className="glass glass-hover group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] hover:border-border-strong"
+      className="rounded-[var(--radius-card)]"
     >
-      <ShineBorder
-        borderWidth={1}
-        duration={14}
-        shineColor={["rgba(255,90,31,0.7)", "rgba(255,255,255,0.35)"]}
-      />
-      <span
-        className={cn(
-          "absolute inset-y-0 left-0 z-10 w-[3px]",
-          severityBar[finding.severity]
-        )}
-      />
-      <div className="flex flex-1 flex-col p-5 pl-6">
+      <MagicCard className="h-full rounded-[var(--radius-card)] shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)]">
+        <span
+          className={cn(
+            "absolute inset-y-0 left-0 z-50 w-[3px]",
+            severityBar[finding.severity]
+          )}
+        />
+        <div className="flex flex-1 flex-col p-5 pl-6">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h4 className="truncate text-[14.5px] font-semibold tracking-tight">
@@ -97,7 +93,8 @@ function FindingCard({ finding, index }: { finding: Finding; index: number }) {
             <ArrowRight className="size-3.5" />
           </Button>
         </div>
-      </div>
+        </div>
+      </MagicCard>
     </motion.div>
   );
 }

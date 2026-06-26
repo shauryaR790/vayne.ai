@@ -65,7 +65,7 @@ export function RecentActivityCard() {
                     initial={{ width: 0 }}
                     animate={{ width: `${scan.progress}%` }}
                     transition={{ duration: 1 }}
-                    className="h-full rounded-full bg-accent shadow-[0_0_12px_rgba(255,90,31,0.7)]"
+                    className="h-full rounded-full bg-accent"
                   />
                 </div>
               )}

@@ -1,32 +1,21 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { ShineBorder } from "./shine-border";
+import { MagicCard } from "./magic-card";
 
 function Card({
   className,
   children,
-  shine = true,
-  ...props
-}: React.ComponentProps<"div"> & { shine?: boolean }) {
+}: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="card"
+    <MagicCard
       className={cn(
-        "glass relative overflow-hidden rounded-[var(--radius-card)] text-foreground",
+        "rounded-[var(--radius-card)] text-foreground shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)]",
         className
       )}
-      {...props}
     >
-      {shine && (
-        <ShineBorder
-          borderWidth={1}
-          duration={14}
-          shineColor={["rgba(255,90,31,0.7)", "rgba(255,255,255,0.35)"]}
-        />
-      )}
       {children}
-    </div>
+    </MagicCard>
   );
 }
 

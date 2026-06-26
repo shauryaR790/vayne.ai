@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function CardShell({ className }: { className?: string }) {
   return (
     <div
-      className={`glass rounded-[var(--radius-card)] p-5 ${className ?? ""}`}
+      className={`rounded-[var(--radius-card)] border border-border bg-surface p-5 ${className ?? ""}`}
     >
       <div className="flex items-center justify-between">
         <Skeleton className="h-3.5 w-28" />
@@ -25,7 +25,7 @@ export function DashboardSkeleton() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-        <div className="glass rounded-[var(--radius-card)] p-5 xl:col-span-4">
+        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-5 xl:col-span-4">
           <Skeleton className="h-4 w-40" />
           <div className="mt-5 space-y-3">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -33,11 +33,11 @@ export function DashboardSkeleton() {
             ))}
           </div>
         </div>
-        <div className="glass rounded-[var(--radius-card)] p-5 xl:col-span-5">
+        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-5 xl:col-span-5">
           <Skeleton className="h-4 w-48" />
           <Skeleton className="mt-5 h-44 w-full rounded-2xl" />
         </div>
-        <div className="glass rounded-[var(--radius-card)] p-5 xl:col-span-3">
+        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-5 xl:col-span-3">
           <Skeleton className="h-4 w-32" />
           <div className="mt-5 space-y-3">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -47,7 +47,7 @@ export function DashboardSkeleton() {
         </div>
       </div>
 
-      <div className="glass rounded-[var(--radius-card)] p-5">
+      <div className="rounded-[var(--radius-card)] border border-border bg-surface p-5">
         <Skeleton className="h-4 w-36" />
         <div className="mt-5 space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (

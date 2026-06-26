@@ -5,7 +5,6 @@ import { DashboardContent } from "@/components/dashboard/dashboard-content";
 export default function DashboardPage() {
   return (
     <div className="relative flex min-h-screen">
-      <div className="app-aurora" />
       <Sidebar />
       <div className="relative z-10 flex min-h-screen flex-1 flex-col">
         <Topbar />

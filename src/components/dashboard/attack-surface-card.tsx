@@ -108,7 +108,7 @@ export function AttackSurfaceCard() {
                           delay: i * 0.05,
                           ease: "easeOut",
                         }}
-                        className="w-2.5 rounded-full bg-gradient-to-t from-accent/40 to-accent shadow-[0_0_20px_-4px_rgba(255,90,31,0.6)]"
+                        className="w-2.5 rounded-full bg-gradient-to-t from-accent/40 to-accent"
                       />
                       <motion.div
                         initial={{ height: 0 }}

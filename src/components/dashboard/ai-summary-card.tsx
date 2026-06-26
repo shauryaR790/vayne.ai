@@ -46,7 +46,6 @@ export function AiSummaryCard() {
   return (
     <MotionItem className="h-full">
       <Card className="relative h-full overflow-hidden">
-        <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-accent/10 blur-3xl" />
         <CardHeader>
           <div className="flex items-center gap-2.5">
             <span className="grid size-8 place-items-center rounded-lg bg-accent-soft ring-1 ring-accent/30">
