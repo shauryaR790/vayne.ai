@@ -11,7 +11,9 @@ import {
 } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ProgressBar } from "@/components/shared/risk-meter";
+import { RiskMeter } from "@/components/shared/risk-meter";
+import { SectionLabel, WorkspaceCard } from "@/components/shared/workspace-card";
 import { AskVayneButton } from "@/components/shared/ask-vayne-button";
 import { MotionItem } from "./motion";
 
@@ -24,64 +26,62 @@ function FindingCard({
   index: number;
   linkToInvestigation?: boolean;
 }) {
+  const exploitPct =
+    finding.exploitability === "High"
+      ? 90
+      : finding.exploitability === "Medium"
+        ? 55
+        : 25;
+
   const inner = (
-    <Card className="flex h-full flex-col p-5 transition-colors hover:bg-white/5">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h4 className="text-[12px] font-bold uppercase tracking-wide">
-            {finding.name}
-          </h4>
-          <p className="mt-1.5 truncate font-mono text-[11px] text-white/50">
-            {finding.asset}
-          </p>
+    <WorkspaceCard className="flex h-full flex-col p-0">
+      <div className="border-b border-white/15 p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h4 className="text-[14px] font-black uppercase leading-snug tracking-wide">
+              {finding.name}
+            </h4>
+            <p className="mt-1.5 truncate font-mono text-[12px] text-white/50">
+              {finding.asset}
+            </p>
+          </div>
+          <Badge
+            variant={finding.severity === "critical" ? "critical" : "default"}
+          >
+            {severityLabel[finding.severity]}
+          </Badge>
         </div>
-        <Badge
-          variant={finding.severity === "critical" ? "critical" : "default"}
-        >
-          {severityLabel[finding.severity]}
-        </Badge>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 text-[11px]">
+      <div className="space-y-4 p-5">
+        <ProgressBar value={finding.confidence} label="Confidence" />
+        <ProgressBar
+          value={exploitPct}
+          label="Exploitability"
+          display={finding.exploitability}
+        />
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-            Confidence
+          <SectionLabel>Business Impact</SectionLabel>
+          <p className="mt-2 text-[13px] font-medium leading-snug">
+            {finding.businessImpact}
           </p>
-          <p className="mt-1 font-bold">{finding.confidence}%</p>
         </div>
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-            Exploitability
+        <div className="border-t border-white/15 pt-4">
+          <SectionLabel>AI Reasoning</SectionLabel>
+          <p className="mt-2 text-[13px] leading-relaxed text-white/65">
+            {finding.aiReasoning}
           </p>
-          <p className="mt-1 font-bold">{finding.exploitability}</p>
         </div>
-        <div className="col-span-2">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-            Business Impact
-          </p>
-          <p className="mt-1">{finding.businessImpact}</p>
-        </div>
+        <RiskMeter value={finding.riskScore} label="Risk Score" />
       </div>
 
-      <div className="mt-4 flex-1 border-t border-white/20 pt-4">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-          AI Reasoning
-        </p>
-        <p className="mt-2 text-[12px] leading-relaxed text-white/60">
-          {finding.aiReasoning}
-        </p>
-      </div>
-
-      <div className="mt-4 flex items-center justify-between border-t border-white/20 pt-4">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-white/50">
-          Investigate →
+      <div className="mt-auto flex items-center justify-between border-t border-white/15 px-5 py-4">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-white/50">
+          Investigate
         </span>
-        <Button variant="secondary" size="sm">
-          Open
-          <ArrowRight className="size-3.5" />
-        </Button>
+        <ArrowRight className="size-4 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:text-white" />
       </div>
-    </Card>
+    </WorkspaceCard>
   );
 
   return (
@@ -90,7 +90,7 @@ function FindingCard({
       transition={{ duration: 0.3, delay: index * 0.05 }}
     >
       {linkToInvestigation ? (
-        <Link href={`/investigations/${finding.id}`} className="block">
+        <Link href={`/investigations/${finding.id}`} className="block h-full">
           {inner}
         </Link>
       ) : (
@@ -112,10 +112,10 @@ export function FindingsSection({
       {showHeader && (
         <div className="mb-4 flex items-center justify-between border-b border-white pb-4">
           <div>
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.15em]">
+            <h3 className="text-[12px] font-bold uppercase tracking-[0.15em]">
               Recent Findings
             </h3>
-            <p className="mt-1 text-[11px] uppercase tracking-wider text-white/50">
+            <p className="mt-1 text-[12px] uppercase tracking-wider text-white/50">
               AI-validated vulnerabilities
             </p>
           </div>

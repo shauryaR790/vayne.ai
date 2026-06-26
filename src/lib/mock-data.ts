@@ -204,10 +204,20 @@ export type Finding = {
   severity: Severity;
   confidence: number;
   asset: string;
+  assetType: string;
+  discoveredAt: string;
+  exploitTime: string;
   exploitability: string;
   businessImpact: string;
   aiReasoning: string;
+  aiSummary: string;
+  rootCause: string;
   explanation: string;
+  riskScore: number;
+  attackPathDepth: number;
+  investigationStatus: string;
+  remediationPriority: string;
+  attackChainPreview: string[];
 };
 
 export const recentFindings: Finding[] = [
@@ -218,12 +228,23 @@ export const recentFindings: Finding[] = [
     severity: "critical",
     confidence: 97,
     asset: "edge-01.vayne-corp.io",
+    assetType: "Web Server",
+    discoveredAt: "2h ago",
+    exploitTime: "<5 min",
     exploitability: "High",
     businessImpact: "Production compromise",
     aiReasoning:
       "Version fingerprint matches known vulnerable release. Safe PoC confirmed RCE.",
+    aiSummary:
+      "Unauthenticated RCE on internet-facing Apache edge node. Immediate patching required before active exploitation.",
+    rootCause: "Unpatched Apache 2.4.59 on edge nodes.",
     explanation:
       "An unauthenticated attacker can achieve remote code execution via a crafted request.",
+    riskScore: 9.6,
+    attackPathDepth: 4,
+    investigationStatus: "Active",
+    remediationPriority: "P0 — Immediate",
+    attackChainPreview: ["Internet", "CDN", "Apache", "Production DB"],
   },
   {
     id: "f-2",
@@ -231,12 +252,23 @@ export const recentFindings: Finding[] = [
     severity: "high",
     confidence: 91,
     asset: "assets-vayne-prod",
+    assetType: "Cloud Storage",
+    discoveredAt: "4h ago",
+    exploitTime: "<15 min",
     exploitability: "High",
     businessImpact: "Production compromise",
     aiReasoning:
       "Public write access enabled on production asset bucket. CDN supply-chain risk.",
+    aiSummary:
+      "Production S3 bucket allows anonymous writes. Attacker can poison CDN assets and pivot to IAM credentials.",
+    rootCause: "Public write ACL on production bucket.",
     explanation:
       "Bucket allows public PUT operations, enabling content tampering and supply-chain injection.",
+    riskScore: 9.8,
+    attackPathDepth: 5,
+    investigationStatus: "Active",
+    remediationPriority: "P0 — Immediate",
+    attackChainPreview: ["Internet", "CDN", "S3", "IAM", "Prod DB"],
   },
   {
     id: "f-3",
@@ -244,12 +276,23 @@ export const recentFindings: Finding[] = [
     severity: "critical",
     confidence: 88,
     asset: "github.com/vayne/infra",
+    assetType: "Source Repository",
+    discoveredAt: "6h ago",
+    exploitTime: "<10 min",
     exploitability: "High",
     businessImpact: "Account takeover",
     aiReasoning:
       "Long-lived key in public repo grants read access to production secrets.",
+    aiSummary:
+      "AWS access key exposed in public GitHub repo. Direct path to secrets manager and production infrastructure.",
+    rootCause: "AWS key committed to public GitHub repository.",
     explanation:
       "A long-lived AWS key was committed to a public repo — chainable to full account takeover.",
+    riskScore: 9.4,
+    attackPathDepth: 4,
+    investigationStatus: "Escalated",
+    remediationPriority: "P0 — Immediate",
+    attackChainPreview: ["GitHub", "IAM Key", "Secrets", "Production"],
   },
   {
     id: "f-4",
@@ -257,18 +300,35 @@ export const recentFindings: Finding[] = [
     severity: "medium",
     confidence: 72,
     asset: "legacy.vayne-corp.io",
+    assetType: "Legacy Endpoint",
+    discoveredAt: "1d ago",
+    exploitTime: "Hours",
     exploitability: "Low",
     businessImpact: "Compliance risk",
     aiReasoning:
       "Deprecated TLS accepted. Low active-exploit likelihood but fails compliance baseline.",
+    aiSummary:
+      "Legacy host accepts TLS 1.0. Session downgrade possible but no active exploit chain identified.",
+    rootCause: "TLS 1.0 still enabled on legacy endpoint.",
     explanation:
       "Deprecated TLS versions expose sessions to downgrade attacks.",
+    riskScore: 5.2,
+    attackPathDepth: 2,
+    investigationStatus: "Monitoring",
+    remediationPriority: "P2 — Scheduled",
+    attackChainPreview: ["Internet", "Legacy Host"],
   },
 ];
 
 export type AttackPathNode = {
   id: string;
   label: string;
+  assetType?: string;
+  riskLevel?: string;
+  exploitability?: string;
+  privilegeGained?: string;
+  annotation?: string;
+  active?: boolean;
 };
 
 export type AttackPath = {
@@ -279,6 +339,10 @@ export type AttackPath = {
   likelihood: string;
   impact: string;
   exploitability: string;
+  blastRadius: string;
+  complexity: string;
+  exploitTime: string;
+  pathConfidence: number;
 };
 
 export const attackPaths: AttackPath[] = [
@@ -286,31 +350,101 @@ export const attackPaths: AttackPath[] = [
     id: "ap-1",
     title: "S3 → IAM → Production DB",
     nodes: [
-      { id: "n1", label: "Internet" },
-      { id: "n2", label: "CDN" },
-      { id: "n3", label: "S3 Bucket" },
-      { id: "n4", label: "IAM" },
-      { id: "n5", label: "Production DB" },
+      { id: "n1", label: "Internet", assetType: "Entry", riskLevel: "Low" },
+      {
+        id: "n2",
+        label: "CDN",
+        assetType: "Distribution",
+        riskLevel: "Medium",
+        annotation: "risk: medium",
+        active: true,
+      },
+      {
+        id: "n3",
+        label: "S3 Bucket",
+        assetType: "Storage",
+        riskLevel: "High",
+        exploitability: "High",
+        privilegeGained: "Write access",
+        annotation: "public write",
+        active: true,
+      },
+      {
+        id: "n4",
+        label: "IAM",
+        assetType: "Identity",
+        riskLevel: "Critical",
+        privilegeGained: "Admin role",
+        annotation: "admin role",
+        active: true,
+      },
+      {
+        id: "n5",
+        label: "Production DB",
+        assetType: "Database",
+        riskLevel: "Critical",
+        privilegeGained: "Full compromise",
+        annotation: "full compromise",
+        active: true,
+      },
     ],
     riskScore: 9.8,
     likelihood: "High",
     impact: "Critical",
     exploitability: "High",
+    blastRadius: "Production + CDN + 12 downstream services",
+    complexity: "Low",
+    exploitTime: "<15 minutes",
+    pathConfidence: 94,
   },
   {
     id: "ap-2",
     title: "GitHub → AWS Secrets",
     nodes: [
-      { id: "n1", label: "Internet" },
-      { id: "n2", label: "GitHub" },
-      { id: "n3", label: "Leaked Key" },
-      { id: "n4", label: "Secrets Manager" },
-      { id: "n5", label: "Production" },
+      { id: "n1", label: "Internet", assetType: "Entry", riskLevel: "Low" },
+      {
+        id: "n2",
+        label: "GitHub",
+        assetType: "Repository",
+        riskLevel: "High",
+        annotation: "public repo",
+        active: true,
+      },
+      {
+        id: "n3",
+        label: "Leaked Key",
+        assetType: "Credential",
+        riskLevel: "Critical",
+        exploitability: "High",
+        privilegeGained: "AWS read",
+        active: true,
+      },
+      {
+        id: "n4",
+        label: "Secrets Manager",
+        assetType: "Secrets",
+        riskLevel: "Critical",
+        privilegeGained: "Secret read",
+        active: true,
+      },
+      {
+        id: "n5",
+        label: "Production",
+        assetType: "Infrastructure",
+        riskLevel: "Critical",
+        privilegeGained: "Full compromise",
+        annotation: "account takeover",
+        active: true,
+      },
     ],
     riskScore: 9.2,
     likelihood: "High",
     impact: "Critical",
     exploitability: "High",
+    blastRadius: "Full AWS account + production workloads",
+    complexity: "Low",
+    exploitTime: "<10 minutes",
+    pathConfidence: 88,
   },
 ];
 
@@ -323,6 +457,14 @@ export type Asset = {
   findings: number;
   critical: number;
   riskLevel: string;
+  environment: string;
+  hostStatus: string;
+  exposureLevel: string;
+  assetType: string;
+  attackPaths: number;
+  exposureScore: number;
+  healthScore: number;
+  lastScan: string;
 };
 
 export const assets: Asset[] = [
@@ -335,6 +477,14 @@ export const assets: Asset[] = [
     findings: 4,
     critical: 1,
     riskLevel: "High",
+    environment: "Production",
+    hostStatus: "Live",
+    exposureLevel: "Internet-facing",
+    assetType: "API Gateway",
+    attackPaths: 2,
+    exposureScore: 78,
+    healthScore: 62,
+    lastScan: "12m ago",
   },
   {
     id: "a-2",
@@ -345,6 +495,14 @@ export const assets: Asset[] = [
     findings: 6,
     critical: 2,
     riskLevel: "Critical",
+    environment: "Production",
+    hostStatus: "Live",
+    exposureLevel: "Internet-facing",
+    assetType: "Edge Server",
+    attackPaths: 3,
+    exposureScore: 92,
+    healthScore: 41,
+    lastScan: "8m ago",
   },
   {
     id: "a-3",
@@ -355,6 +513,14 @@ export const assets: Asset[] = [
     findings: 2,
     critical: 0,
     riskLevel: "Low",
+    environment: "Production",
+    hostStatus: "Live",
+    exposureLevel: "Internet-facing",
+    assetType: "Auth Service",
+    attackPaths: 0,
+    exposureScore: 34,
+    healthScore: 88,
+    lastScan: "1h ago",
   },
   {
     id: "a-4",
@@ -365,6 +531,14 @@ export const assets: Asset[] = [
     findings: 3,
     critical: 1,
     riskLevel: "Medium",
+    environment: "Production",
+    hostStatus: "Live",
+    exposureLevel: "Internet-facing",
+    assetType: "CDN",
+    attackPaths: 1,
+    exposureScore: 65,
+    healthScore: 71,
+    lastScan: "23m ago",
   },
 ];
 
