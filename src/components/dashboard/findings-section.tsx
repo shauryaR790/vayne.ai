@@ -11,9 +11,10 @@ import {
 } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CollapsibleWorkspaceCard } from "@/components/shared/collapsible-workspace-card";
 import { ProgressBar } from "@/components/shared/risk-meter";
 import { RiskMeter } from "@/components/shared/risk-meter";
-import { SectionLabel, WorkspaceCard } from "@/components/shared/workspace-card";
+import { SectionLabel } from "@/components/shared/workspace-card";
 import { AskVayneButton } from "@/components/shared/ask-vayne-button";
 import { MotionItem } from "./motion";
 
@@ -34,25 +35,27 @@ function FindingCard({
         : 25;
 
   const inner = (
-    <WorkspaceCard className="flex h-full flex-col p-0">
-      <div className="border-b border-white/15 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h4 className="text-[14px] font-black uppercase leading-snug tracking-wide">
-              {finding.name}
-            </h4>
-            <p className="mt-1.5 truncate font-mono text-[12px] text-white/50">
-              {finding.asset}
-            </p>
-          </div>
+    <CollapsibleWorkspaceCard
+      expandLabel="View finding details"
+      previewValue={finding.confidence}
+      title={
+        <>
+          <h4 className="text-[14px] font-black uppercase leading-snug tracking-wide">
+            {finding.name}
+          </h4>
           <Badge
             variant={finding.severity === "critical" ? "critical" : "default"}
           >
             {severityLabel[finding.severity]}
           </Badge>
-        </div>
-      </div>
-
+        </>
+      }
+      subtitle={
+        <p className="truncate font-mono text-[12px] text-white/50">
+          {finding.asset}
+        </p>
+      }
+    >
       <div className="space-y-4 p-5">
         <ProgressBar value={finding.confidence} label="Confidence" />
         <ProgressBar
@@ -73,29 +76,26 @@ function FindingCard({
           </p>
         </div>
         <RiskMeter value={finding.riskScore} label="Risk Score" />
+        {linkToInvestigation && (
+          <Link
+            href={`/investigations/${finding.id}`}
+            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-white/50 transition-colors hover:text-white"
+          >
+            Investigate
+            <ArrowRight className="size-3.5" />
+          </Link>
+        )}
       </div>
-
-      <div className="mt-auto flex items-center justify-between border-t border-white/15 px-5 py-4">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-white/50">
-          Investigate
-        </span>
-        <ArrowRight className="size-4 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:text-white" />
-      </div>
-    </WorkspaceCard>
+    </CollapsibleWorkspaceCard>
   );
 
   return (
     <motion.div
       variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="h-full"
     >
-      {linkToInvestigation ? (
-        <Link href={`/investigations/${finding.id}`} className="block h-full">
-          {inner}
-        </Link>
-      ) : (
-        inner
-      )}
+      {inner}
     </motion.div>
   );
 }

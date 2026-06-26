@@ -1,0 +1,92 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { ChevronDown } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { WorkspaceCard } from "@/components/shared/workspace-card";
+
+export function CollapsibleWorkspaceCard({
+  title,
+  subtitle,
+  trailing,
+  expandLabel = "View details",
+  previewValue,
+  children,
+  className,
+}: {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  trailing?: React.ReactNode;
+  expandLabel?: string;
+  /** 0–100 — fills the preview bar when collapsed */
+  previewValue?: number;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <WorkspaceCard className={cn("p-0", className)}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-start justify-between gap-4 p-5 text-left transition-colors hover:bg-white/[0.03]"
+      >
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-3">{title}</div>
+          {subtitle && <div className="mt-2">{subtitle}</div>}
+        </div>
+        {trailing}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label={open ? "Collapse" : expandLabel}
+        className="group/bar flex w-full flex-col border-t border-white/15 transition-colors hover:bg-white/[0.04]"
+      >
+        {previewValue !== undefined && (
+          <div className="h-1 w-full bg-white/10">
+            <motion.div
+              className="h-full bg-white"
+              initial={false}
+              animate={{ width: `${previewValue}%` }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            />
+          </div>
+        )}
+        <div className="flex items-center gap-3 px-5 py-3">
+          <div className="h-px flex-1 bg-white/15 transition-colors group-hover/bar:bg-white/30" />
+          <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-colors group-hover/bar:text-white/70">
+            {open ? "Collapse" : expandLabel}
+            <ChevronDown
+              className={cn(
+                "size-3.5 transition-transform duration-300",
+                open && "rotate-180"
+              )}
+            />
+          </span>
+          <div className="h-px flex-1 bg-white/15 transition-colors group-hover/bar:bg-white/30" />
+        </div>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="border-t border-white/15">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </WorkspaceCard>
+  );
+}
