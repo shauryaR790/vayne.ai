@@ -5,11 +5,11 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { AttackPath, AttackPathNode } from "@/lib/mock-data";
 import { AttackChainTimeline } from "@/components/attack-paths/attack-chain-timeline";
-import { CollapsibleWorkspaceCard } from "@/components/shared/collapsible-workspace-card";
 import { ProgressBar, RiskMeter } from "@/components/shared/risk-meter";
 import {
   MetricTile,
   SectionLabel,
+  WorkspaceCard,
 } from "@/components/shared/workspace-card";
 
 function PathNode({
@@ -84,21 +84,16 @@ function PathNode({
 
 export function AttackPathInvestigation({ path }: { path: AttackPath }) {
   return (
-    <CollapsibleWorkspaceCard
-      expandLabel="Decompose attack path"
-      previewValue={path.pathConfidence}
-      className="overflow-hidden"
-      title={
+    <WorkspaceCard className="overflow-hidden p-0">
+      <div className="border-b border-white/15 px-6 py-5">
         <h2 className="text-base font-black uppercase tracking-wide sm:text-lg">
           {path.title}
         </h2>
-      }
-      subtitle={
-        <p className="text-[11px] font-bold uppercase tracking-wider text-white/45">
+        <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-white/45">
           {path.pathConfidence}% path confidence · {path.nodes.length} hops
         </p>
-      }
-    >
+      </div>
+
       <div className="p-6">
         <div className="flex flex-col items-center">
           {path.nodes.map((node, i) => (
@@ -142,6 +137,6 @@ export function AttackPathInvestigation({ path }: { path: AttackPath }) {
         <ProgressBar value={path.pathConfidence} label="Path Confidence" />
         <RiskMeter value={path.riskScore} label="Attack Path Score" />
       </div>
-    </CollapsibleWorkspaceCard>
+    </WorkspaceCard>
   );
 }

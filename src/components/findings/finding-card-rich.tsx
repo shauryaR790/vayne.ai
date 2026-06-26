@@ -42,12 +42,41 @@ export function FindingCardRich({ finding }: { finding: Finding }) {
       }
     >
       <div className="grid gap-0 lg:grid-cols-12">
-        <div className="border-b border-white/15 p-6 lg:col-span-3 lg:border-b-0 lg:border-r">
-          {finding.cve && (
-            <p className="border border-black bg-white/[0.04] px-2 py-1 font-mono text-[11px] uppercase text-white/50">
-              {finding.cve}
+        <div className="space-y-4 border-b border-white/15 p-6 lg:col-span-4 lg:border-b-0 lg:border-r">
+          <div>
+            <SectionLabel>Target Asset</SectionLabel>
+            <p className="mt-2 font-mono text-[13px] uppercase text-white/80">
+              {finding.asset}
             </p>
+          </div>
+          <div>
+            <SectionLabel>Asset Type</SectionLabel>
+            <p className="mt-2 text-[13px] font-bold uppercase">
+              {finding.assetType}
+            </p>
+          </div>
+          {finding.cve && (
+            <div>
+              <SectionLabel>CVE</SectionLabel>
+              <p className="mt-2 font-mono text-[12px] uppercase text-white/60">
+                {finding.cve}
+              </p>
+            </div>
           )}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <SectionLabel>Discovered</SectionLabel>
+              <p className="mt-2 text-[12px] font-bold uppercase">
+                {finding.discoveredAt}
+              </p>
+            </div>
+            <div>
+              <SectionLabel>Exploit Time</SectionLabel>
+              <p className="mt-2 text-[12px] font-bold uppercase">
+                {finding.exploitTime}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-5 border-b border-white/15 p-6 lg:col-span-4 lg:border-b-0 lg:border-r">
@@ -65,7 +94,7 @@ export function FindingCardRich({ finding }: { finding: Finding }) {
           </div>
         </div>
 
-        <div className="flex flex-col p-6 lg:col-span-5">
+        <div className="flex flex-col p-6 lg:col-span-4">
           <SectionLabel>AI Reasoning</SectionLabel>
           <p className="mt-3 flex-1 text-[14px] leading-relaxed text-white/70">
             {finding.aiReasoning}

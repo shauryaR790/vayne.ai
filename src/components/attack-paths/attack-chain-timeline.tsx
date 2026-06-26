@@ -65,19 +65,6 @@ export function AttackChainTimeline({ nodes }: { nodes: AttackPathNode[] }) {
           );
         })}
       </div>
-
-      <div className="mt-5 flex justify-center gap-6 font-mono text-[9px] uppercase tracking-widest text-white/35">
-        <span>
-          Active hops:{" "}
-          <span className="font-bold text-white">
-            {nodes.filter((n, i) => n.active ?? i > 0).length}
-          </span>
-        </span>
-        <span>
-          Depth:{" "}
-          <span className="font-bold text-white">{nodes.length}</span>
-        </span>
-      </div>
     </div>
   );
 }
