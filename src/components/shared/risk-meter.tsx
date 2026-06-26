@@ -46,29 +46,49 @@ export function ProgressBar({
   label,
   display,
   className,
+  invertOnGroupHover,
 }: {
   value: number;
   label: string;
   display?: string;
   className?: string;
+  invertOnGroupHover?: boolean;
 }) {
   const displayValue = (display ?? `${value}%`).toUpperCase();
 
   return (
     <div className={cn("space-y-2", className)}>
-      <span className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
+      <span
+        className={cn(
+          "text-[12px] font-bold uppercase tracking-[0.14em] text-white/50",
+          invertOnGroupHover && "group-hover:text-black/55"
+        )}
+      >
         {label}
       </span>
       <div className="flex items-center gap-3">
-        <div className="h-2 min-w-0 max-w-[58%] flex-1 overflow-hidden border border-black bg-black">
+        <div
+          className={cn(
+            "h-2 min-w-0 max-w-[58%] flex-1 overflow-hidden border border-black bg-black",
+            invertOnGroupHover && "group-hover:bg-black/10"
+          )}
+        >
           <motion.div
-            className="h-full bg-white"
+            className={cn(
+              "h-full bg-white",
+              invertOnGroupHover && "group-hover:bg-black"
+            )}
             initial={{ width: 0 }}
             animate={{ width: `${value}%` }}
             transition={{ duration: 0.9, ease: "easeOut" }}
           />
         </div>
-        <span className="shrink-0 text-lg font-black uppercase leading-none">
+        <span
+          className={cn(
+            "shrink-0 text-lg font-black uppercase leading-none",
+            invertOnGroupHover && "group-hover:text-black"
+          )}
+        >
           {displayValue}
         </span>
       </div>
